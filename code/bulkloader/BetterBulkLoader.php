@@ -104,8 +104,8 @@ class BetterBulkLoader extends BulkLoader {
 		return $this;	
 	}
 
-	public function setPublishPages($dopubilsh){
-		$this->publishPages = $dopubilsh;
+	public function setPublishPages($dopublish){
+		$this->publishPages = $dopublish;
 		return $this;
 	}
 
@@ -232,9 +232,9 @@ class BetterBulkLoader extends BulkLoader {
 				$obj->write();
 
 				//publish pages
-				if ($this->publishPages && $obj instanceof SiteTree) {
-					$obj->publish('Stage', 'Live');
-				}
+                if ($this->publishPages && (($obj instanceof SiteTree) || $obj::has_extension('Versioned')))  {
+                    $obj->publish('Stage', 'Live');
+                }
 
 				// save to results
 				if ($existing) {
